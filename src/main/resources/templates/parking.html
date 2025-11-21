@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+}
+
+header {
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+}
+
+nav {
+  width: 100%;
+  height: 70px;
+  background-color: white;
+}
+
+nav .nav-links {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  height: 100%;
+  list-style: none;
+}
+
+.nav-links li {
+  font-size: 20px;
+  padding: 0 20px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.nav-links li:first-child {
+  margin-right: auto;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: black;
+}
+
+h1 {
+  text-align: center;
+  margin: 20px 20px;
+}
+
+.parking-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adjust column size */
+  gap: 20px;
+  padding: 20px;
+  max-width: 90%;
+  margin: 0 auto;
+}
+
+.spot-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.spot {
+  background-color: rgb(40, 40, 40);
+  border: 5px solid yellow;
+  height: 150px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  font-size: 20px;
+}
+
+.spot:hover {
+  background-color: grey;
+  font-weight: 1000;
+}
+
+/* Custom styles for the reserve button */
+.reserve-btn {
+  background-color: yellow;
+  color: black;
+  font-size: 18px;
+  padding: 8px 12px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  border-radius: 5px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.reserve-btn:hover {
+  background-color: orange;
+}
+</style>
+<title>Parking Space Selection</title>
+</head>
+<body>
+<header>
+<nav>
+<ul class="nav-links">
+<li><a href="#">Parking</a></li>
+<li><a href="/api/projecthome/profile">Profile</a></li>
+<li><a href="/api/projecthome/my-parking">My Parking</a></li>
+<li><a href="/api/projecthome/logout">Logout</a></li>
+</ul>
+</nav>
+</header>
+<h1>Select a Parking Space</h1>
+<div class="parking-container">
+    <div class="spot-wrapper" th:each="spot : ${spot}">
+        <!-- Parking Cell -->
+        <div class="spot">
+            <p th:text="${spot.location}">Parking Spot</p>
+        </div>
+        <!-- Reserve Button Below -->
+        <form th:action="@{/api/projecthome/reservespot}" method="post">
+            <button class="reserve-btn" type="submit" name="id" th:value="${spot.id}">Reserve</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

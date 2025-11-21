@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Manage Parking Spots</title>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f8f9fa;
+}
+
+header {
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    width: 100%;
+    background: white;
+}
+
+nav {
+    width: 100%;
+    height: 70px;
+}
+
+nav .nav-links {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    height: 100%;
+    list-style: none;
+    padding-right: 20px;
+}
+
+.nav-links li {
+    font-size: 20px;
+    padding: 0 20px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.nav-links li:first-child {
+    margin-right: auto;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+
+h1 {
+    margin: 20px 0;
+    text-align: center;
+    color: #333;
+}
+
+/* Form styling */
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+input[type="text"] {
+    width: 300px;
+    padding: 10px;
+    border: 2px solid #007bff;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    font-size: 18px;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Parking Grid Layout */
+.parking-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Responsive grid */
+    gap: 20px;
+    padding: 20px;
+    max-width: 90%;
+    margin: 0 auto;
+}
+
+/* Individual Parking Spot */
+.spot-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    border: 5px solid yellow;
+}
+
+.spot-card h3 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.spot-card p {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+/* Delete Button */
+.delete-btn {
+    background-color: #dc3545;
+    padding: 8px 12px;
+    font-size: 16px;
+    border-radius: 5px;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.delete-btn:hover {
+    background-color: #a71d2a;
+}
+</style>
+</head>
+<body>
+<header>
+<nav>
+<ul class="nav-links">
+<li><a href="#">Parking</a></li>
+<li><a href="/api/projecthome/admin-page">Home</a></li>
+<li><a href="/api/projecthome/logout">Logout</a></li>
+</ul>
+</nav>
+</header>
+
+<h1>Manage Parking Spots</h1>
+
+<!-- Form for adding a new parking spot -->
+<form th:action="@{/api/projecthome/addspot}" method="post" th:object="${spot}">
+    <input type="text" id="location" name="location" placeholder="Enter location" required>
+    <button type="submit">Add Parking Spot</button>
+</form>
+
+<!-- Grid Layout for Parking Spots -->
+<div class="parking-container">
+    <div class="spot-card" th:each="spot : ${spots}">
+        <h3 th:text="${spot.location}">Parking Spot</h3>
+        <p>Available: <span th:text="${spot.available}"></span></p>
+        
+        <!-- Delete Button Below -->
+        <form th:action="@{/api/projecthome/deletespot}" method="post">
+            <button class="delete-btn" type="submit" name="id" th:value="${spot.id}">Delete</button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+*{
+margin:0;
+padding:0;
+}
+body
+{
+min-height:100vh;
+}
+header
+{
+ box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+}
+nav{
+width:100%;
+height:70px;
+background-color:white;
+}
+nav .nav-links
+{
+display:flex;
+flex-direction:row;
+align-items:center;
+justify-content:flex-end;
+height:100%;
+list-style:none;
+}
+.nav-links li
+{
+font-size:20px;
+padding:0 20px;
+}
+.nav-links li
+{
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+.nav-links li:first-child
+{
+    margin-right: auto;
+}
+.nav-links a
+{
+text-decoration:none;
+color:black;
+}
+h1
+{
+text-align:center;
+}
+
+
+</style>
+</head>
+<body>
+
+<header>
+<nav>
+<ul class="nav-links">
+<li><a href="#">Parking</a></li>
+<li><a href="/api/projecthome/parking">home</a></li>
+<li><a href="/api/projecthome/my-parking">my parking</a></li>
+<li><a href="/api/projecthome/logout">logout</a></li>
+</ul>
+</nav>
+</header>
+
+<h1>Welcome, <span th:text="${loggeduser.username}"></span>!</h1>
+<p>Email: <span th:text="${loggeduser.email}"></span></p>
+<p>Contact: <span th:text="${loggeduser.contact}"></span></p>
+</body>
+</html>

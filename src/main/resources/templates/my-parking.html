@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+*{
+margin:0;
+padding:0;
+}
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+header
+{
+ box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+ width:100%;
+}
+nav{
+width:100%;
+height:70px;
+}
+nav .nav-links
+{
+display:flex;
+flex-direction:row;
+align-items:center;
+justify-content:flex-end;
+height:100%;
+list-style:none;
+}
+.nav-links li
+{
+font-size:20px;
+padding:0 20px;
+}
+.nav-links li
+{
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+.nav-links li:first-child
+{
+    margin-right: auto;
+}
+.nav-links a
+{
+text-decoration:none;
+color:black;
+}
+.table-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 20px;
+}
+
+table {
+    border-collapse: collapse;
+    width: 60%;
+    text-align: center;
+    border: 1px solid black;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid black;
+    text-align: center;
+}
+
+thead {
+    background-color: #f2f2f2;
+}
+
+
+</style>
+</head>
+<body>
+<header>
+<nav>
+<ul class="nav-links">
+<li><a href="#">Parking</a></li>
+<li><a href="/api/projecthome/profile">profile</a></li>
+<li><a href="/api/projecthome/parking">home</a></li>
+<li><a href="/api/projecthome/logout">logout</a></li>
+</ul>
+</nav>
+</header>
+
+<h1>my reservations</h1>
+<div class="table-container">
+<table border="1">
+        <thead>
+            <tr>
+                <th>location</th>
+                <th>manage</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="res : ${reservations}">
+                <td th:text="${res.location}"></td>
+                <td>
+                <form th:action="@{/api/projecthome/releasespot}" method="post">
+                <button type="submit" name="id" th:value="${res.id}">release</button>
+                </form>
+                </td>
+            </tr>
+        </tbody>
+</table>
+</div>
+</body>
+</html>
